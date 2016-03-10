@@ -49,7 +49,7 @@ def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
 
     try:
-        answers = question.answer.all()
+        answers = Answer.question_set.all()
     except:
         answers = None
 
