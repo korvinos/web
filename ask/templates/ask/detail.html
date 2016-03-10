@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Question</h1>
+{{ title }}
+{{ text }}
+{% for answer in answers %}
+    {{ answer.text }}
+{% endfor %}
 </body>
 </html>

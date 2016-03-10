@@ -47,12 +47,17 @@ def popular(request):
 
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
+
+    try:
+        answers = question.answer.all()
+    except:
+        answers = None
+
     context = {
         'title': question.title,
         'text': question.text,
+        'answers': answers,
         }
-    return render(request, 'ask/detail.html', {
-        'test': 'Hello'
-    })
+    return render(request, 'ask/detail.html', context)
 
 
