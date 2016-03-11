@@ -11,37 +11,31 @@ def test(request, *args, **kwargs):
 
 
 def new(request):
-    try:
-        last_questions = Question.odjects.order_by('-id')
-        limit = request.GET.get('limit', 10)
-        page = request.GET.get('page', 1)
-        paginator = Paginator(last_questions, limit)
-        paginator.baseurl = '/?page='
-        page = paginator.page(page)
-    except:
-        raise Http404
+    last_questions = Question.objects.order_by('-id')
+    limit = request.GET.get('limit', 10)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(last_questions, limit)
+    paginator.baseurl = '/?page='
+    page = paginator.page(page)
     return render(request, 'ask/index.html', {
-        last_questions: page.odject_list,
-        paginator: paginator,
-        page: page,
+        'last_questions': page.object_list,
+        'paginator': paginator,
+        'page': page,
     })
 
 
 
 def popular(request):
-    try:
-        questions = Question.odjects.order_by('-rating')
-        limit = request.GET.get('limit', 10)
-        page = request.GET.get('page', 1)
-        paginator = Paginator(questions, limit)
-        paginator.baseurl = '/?page='
-        page = paginator.page(page)
-    except:
-        raise Http404
+    questions = Question.objects.order_by('-rating')
+    limit = request.GET.get('limit', 10)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(questions, limit)
+    paginator.baseurl = '/?page='
+    page = paginator.page(page)
     return render(request, 'ask/popular.html', {
-        questions: page.odject_list,
-        paginator: paginator,
-        page: page,
+        'questions': page.object_list,
+        'paginator': paginator,
+        'page': page,
     })
 
 

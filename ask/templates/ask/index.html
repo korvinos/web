@@ -8,7 +8,9 @@
 {% for question in last_questions %}
     <a href="/question/{{ question.id }}">{{ question.title }}</a>
 {% endfor %}
+
 <nav><ul class="paginator">
+	{% for p in paginator.page_range %}
 	{% if p.number == page.number %}
 	<li class="active">
 	{% else %}
@@ -17,7 +19,7 @@
 		<a href="{{ paginator.baseurl }}{{ p.number }}">
 		{{ p.number }}	</a>
 	</li>
-{% endfor %}
+	{% endfor %}
 </ul></nav>
 </body>
 </html>
