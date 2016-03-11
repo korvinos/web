@@ -6,7 +6,9 @@
 </head>
 <body>
 
-
+{% for question in questions %}
+    <a href="/question/{{ question.id }}">{{ question.title }}</a>
+{% endfor %}
 
 <nav><ul class="paginator">
 {% for p in paginator.page_range %}

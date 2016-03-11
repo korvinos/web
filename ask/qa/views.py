@@ -11,7 +11,7 @@ def test(request, *args, **kwargs):
 
 
 def new(request):
-    last_questions = Question.objects.order_by('-id')
+    last_questions = Question.objects.order_by('id')
     limit = request.GET.get('limit', 10)
     page = request.GET.get('page', 1)
     paginator = Paginator(last_questions, limit)
@@ -28,9 +28,9 @@ def new(request):
 def popular(request):
     questions = Question.objects.order_by('-rating')
     limit = request.GET.get('limit', 10)
-    page = request.GET.get('page', 1)
+    page = request.GET.get('page')
     paginator = Paginator(questions, limit)
-    paginator.baseurl = '/?page='
+    paginator.baseurl = '/popular/?page='
     page = paginator.page(page)
     return render(request, 'ask/popular.html', {
         'questions': page.object_list,
@@ -41,16 +41,12 @@ def popular(request):
 
 def question_detail(request, question_id):
     question = get_object_or_404(Question, id=question_id)
-
-    try:
-        answers = Answer.question_set.all()
-    except:
-        answers = None
-
+    answers = Answer.objects.filter(question=question_id)
     context = {
         'title': question.title,
         'text': question.text,
         'answers': answers,
+        'rating': question.rating,
         }
     return render(request, 'ask/detail.html', context)
 
