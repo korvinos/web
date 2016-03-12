@@ -11,5 +11,12 @@
 {% for answer in answers %}
     {{ answer.text }}
 {% endfor %}
+
+<form method="post" enctype="application/x-www-form-urlencoded">
+    {% csrf_token %}
+    <textarea>{{ form }}</textarea>
+    <button>Отправить</button>
+</form>
+
 </body>
 </html>
