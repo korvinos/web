@@ -22,8 +22,8 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(null=True, blank=True)
-    question = models.ForeignKey(Question, null=True)
+    question = models.IntegerField(Question, null=True)
     author = models.ForeignKey(User, null=True)
 
     def get_url(self):
-        return '/question/%d/' % self.question_id
+        return '/question/%d/' % self.question
