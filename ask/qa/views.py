@@ -40,20 +40,6 @@ def popular(request):
     })
 
 
-def question_detail(request, question_id):
-    question = get_object_or_404(Question, id=question_id)
-    answers = Answer.objects.filter(question=question_id)
-    form = AnswerForm()
-    context = {
-        'title': question.title,
-        'text': question.text,
-        'answers': answers,
-        'rating': question.rating,
-        'from': form,
-        }
-    return render(request, 'ask/detail.html', context)
-
-
 def ask_form(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
@@ -68,6 +54,7 @@ def ask_form(request):
     })
 
 
+
 def answer_form(request):
     if request.method == 'POST':
         form = AnswerForm(request.POST)
@@ -80,3 +67,24 @@ def answer_form(request):
     return render(request, 'ask/answer_form.html', {
         'form': form,
     })
+
+
+def question_detail(request, question_id):
+    question = get_object_or_404(Question, id=question_id)
+    answers = Answer.objects.filter(question=question_id)
+    if request.method is 'POST':
+        return answer_form(request)
+    form = AnswerForm()
+    context = {
+        'title': question.title,
+        'text': question.text,
+        'answers': answers,
+        'rating': question.rating,
+        'from': form,
+        }
+    return render(request, 'ask/detail.html', context)
+
+
+
+
+
